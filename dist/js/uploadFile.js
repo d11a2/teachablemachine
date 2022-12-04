@@ -37,7 +37,7 @@ async function predict() {
     const barHolders = $('.bar-graph-holder');
 
     for (let i = 0; i < maxPredictions; i++) {
-        const percents = (Math.round(prediction[i].probability.toFixed(2) * 100)) + '%';
+        const percents = parseInt(prediction[i].probability.toFixed(2) * 100) + '%';
         const rgba = `${Math.floor(Math.random() * 255)},
                       ${Math.floor(Math.random() * 255)},
                       ${Math.floor(Math.random() * 255)}`;
