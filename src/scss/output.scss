@@ -1,0 +1,74 @@
+.output {
+  transition: 0.7s;
+  display: none;
+
+  font-family: 'Google Sans', Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  --focus-color: #8AB4F8;
+  user-select: text;
+  font-size: 1.125rem;
+  color: #999;
+
+  text-align: left;
+}
+
+#fileDetails {
+  display: none;
+  transition: 0.7s;
+}
+
+.upload-area {
+  transition: 0.7s;
+}
+
+.sub-label {
+
+
+}
+
+.bar-graph-holder {
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 30px;
+  width: 100%;
+  margin-bottom: 7px;
+
+  &__label {
+    width: 30%;
+  }
+
+  &__bar {
+    width: 65%;
+    height: 100%;
+    border-radius: 7px;
+    background-color: transparent;
+
+    .inner {
+      width: 10%;
+      height: 100%;
+      border-radius: inherit;
+      background-color: transparent;
+      position: relative;
+      overflow: hidden;
+
+
+    }
+  }
+}
+
+
+.value-label {
+  color: #ffffff;
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  font-size: 10px;
+  font-weight: 400;
+  transform: translate(0, -50%);
+}
