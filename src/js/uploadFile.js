@@ -16,6 +16,8 @@ async function init() {
 
     const modelURL = URL + 'model.json';
     const metadataURL = URL + 'metadata.json';
+    console.log(modelURL);
+    console.log(metadataURL);
 
     // load the model and metadata
     model = await tmImage.load(modelURL, metadataURL);
@@ -31,24 +33,27 @@ async function init() {
 async function predict() {
     console.log('predict')
     // predict can take in an image, video or canvas html element
-    var image = document.getElementById('previewImage');
+    const image = document.getElementById('previewImage');
     const prediction = await model.predict(image, false);
-
     const barHolders = $('.bar-graph-holder');
 
     for (let i = 0; i < maxPredictions; i++) {
-        const percents = parseInt(prediction[i].probability.toFixed(2) * 100) + '%';
+
+        const percents = parseInt(prediction[i].probability.toFixed(2) * 100);
         const rgba = `${Math.floor(Math.random() * 255)},
                       ${Math.floor(Math.random() * 255)},
                       ${Math.floor(Math.random() * 255)}`;
 
         $(barHolders[i]).find('.bar-graph-holder__label').text(prediction[i].className);
-        $(barHolders[i]).find('.value-label').text(percents);
-        $(barHolders[i]).find('.inner').css('width', percents);
+        $(barHolders[i]).find('.value-label').text(percents + '%');
+        $(barHolders[i]).find('.inner').css('width', percents + '%');
         $(barHolders[i]).find('.bar-graph-holder__bar').css('background-color',
             `rgba(${rgba},0.2)`);
         $(barHolders[i]).find('.inner').css('background-color',
             `rgba(${rgba},0.7)`);
+        if (percents > 0) {
+            $(barHolders[i]).addClass("bar-graph-holder--visible")
+        }
     }
     $('.output').slideDown();
 }
