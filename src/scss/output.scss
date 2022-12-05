@@ -26,11 +26,6 @@
   transition: 0.7s;
 }
 
-.sub-label {
-
-
-}
-
 .bar-graph-holder {
   text-align: left;
   justify-content: space-between;
@@ -39,6 +34,7 @@
   width: 100%;
   margin-bottom: 7px;
   display: none;
+
 
   &--visible {
     display: flex;
@@ -54,6 +50,7 @@
     height: 100%;
     border-radius: 7px;
     background-color: transparent;
+    overflow: hidden;
 
     .inner {
       width: 10%;
@@ -74,7 +71,7 @@
   color: #000;
   position: absolute;
   top: 50%;
-  left: 102%;
+  right: 8px;
   font-weight: 400;
   transform: translate(0, -50%);
 }

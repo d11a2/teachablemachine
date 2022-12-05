@@ -11,7 +11,6 @@ const barHolder = '<div class="bar-graph-holder"><div class="bar-graph-holder__l
 async function init() {
     console.log('init')
 
-    model = null;
     $('#label-container').empty();
 
     const modelURL = URL + 'model.json';
@@ -30,12 +29,27 @@ async function init() {
     }
 }
 
+function sortItems(prediction) {
+    prediction.sort((a, b) => {
+        return b.probability - a.probability;
+    })
+}
+
+function displayItems(prediction, barHolders, count) {
+    for (let i = 0; i < count; i++) {
+        if (parseInt(prediction[i].probability.toFixed(2) * 100) > 0) {
+            $(barHolders[i]).addClass("bar-graph-holder--visible")
+        }
+    }
+}
+
 async function predict() {
     console.log('predict')
     // predict can take in an image, video or canvas html element
     const image = document.getElementById('previewImage');
     const prediction = await model.predict(image, false);
     const barHolders = $('.bar-graph-holder');
+    sortItems(prediction);
 
     for (let i = 0; i < maxPredictions; i++) {
 
@@ -46,15 +60,22 @@ async function predict() {
 
         $(barHolders[i]).find('.bar-graph-holder__label').text(prediction[i].className);
         $(barHolders[i]).find('.value-label').text(percents + '%');
-        $(barHolders[i]).find('.inner').css('width', percents + '%');
-        $(barHolders[i]).find('.bar-graph-holder__bar').css('background-color',
-            `rgba(${rgba},0.2)`);
-        $(barHolders[i]).find('.inner').css('background-color',
-            `rgba(${rgba},0.7)`);
-        if (percents > 0) {
-            $(barHolders[i]).addClass("bar-graph-holder--visible")
+        $(barHolders[i]).find('.inner').css({
+            width: `${percents}%`
+        });
+        $(barHolders[i]).find('.bar-graph-holder__bar').css({
+            backgroundColor: `rgba(${rgba},0.2)`
+        });
+        $(barHolders[i]).find('.inner').css({
+            backgroundColor: `rgba(${rgba},0.7)`
+        });
+        if (percents < 10) {
+            $(barHolders[i]).find('.value-label').css({
+                right: "-25px"
+            })
         }
     }
+    displayItems(prediction, barHolders, 5);
     $('.output').slideDown();
 }
 
